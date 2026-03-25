@@ -1,4 +1,8 @@
-const socket = io("http://localhost:3000");
+// 🔥 배포 서버 주소
+const API = "https://messenger-4zq5.onrender.com";
+
+// 🔥 소켓 연결
+const socket = io(API);
 
 let currentUser = "";
 let currentRoom = "";
@@ -27,9 +31,9 @@ function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  fetch("http://localhost:3000/login", {
+  fetch(`${API}/login`, {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password })
   })
   .then(res => res.json())
@@ -53,9 +57,9 @@ function register() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  fetch("http://localhost:3000/register", {
+  fetch(`${API}/register`, {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password })
   })
   .then(res => res.json())
@@ -94,17 +98,20 @@ function joinRoom() {
 
   showChat();
 
-  fetch(`http://localhost:3000/messages/${currentRoom}`)
+  fetch(`${API}/messages/${currentRoom}`)
     .then(res => res.json())
     .then(data => {
       data.forEach(msg => renderMessage(msg));
     });
 }
+
+// 🔥 엔터 전송
 function handleKey(event) {
   if (event.key === "Enter") {
     send();
   }
 }
+
 // 🔥 메시지 전송
 function send() {
   if (!currentUser) {
@@ -118,8 +125,10 @@ function send() {
   }
 
   const input = document.getElementById("msg");
-  const msg = input.value;
+  const msg = input.value.trim();
   const token = localStorage.getItem("token");
+
+  if (!msg) return;
 
   socket.emit("sendMessage", {
     text: msg,
@@ -127,7 +136,8 @@ function send() {
     token: token
   });
 
-  input.value = ""; // 🔥 입력창 비우기
+  input.value = "";
+  input.focus();
 }
 
 // 🔥 메시지 표시
