@@ -27,7 +27,9 @@ mongoose.connection.on("connected", () => {
 mongoose.connection.on("error", (err) => {
   console.log("❌ DB 에러:", err);
 });
-
+app.get("/", (req, res) => {
+  res.send("서버 정상 작동 중 🚀");
+});
 // ================== API ==================
 
 // 🔥 방별 메시지 조회
