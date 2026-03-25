@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>메신저</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 🔥 로그인 페이지 -->
+<div id="loginPage" class="container">
+  <h2>로그인</h2>
+  <input id="username" placeholder="아이디" />
+  <input id="password" placeholder="비밀번호" />
+  <button onclick="login()">로그인</button>
+  <button onclick="register()">회원가입</button>
+</div>
+
+<!-- 🔥 메인 페이지 -->
+<div id="mainPage" class="container" style="display:none;">
+  <h3>환영합니다 <span id="userLabel"></span>님</h3>
+  <button onclick="logout()">로그아웃</button>
+
+  <hr>
+
+  <input id="room" placeholder="방 이름 입력" />
+  <button onclick="joinRoom()">입장</button>
+</div>
+
+<!-- 🔥 채팅 페이지 -->
+<div id="chatPage" class="container" style="display:none;">
+  <h3>채팅방: <span id="roomLabel"></span></h3>
+
+  <div id="chatBox"></div>
+
+  <input id="msg" placeholder="메시지 입력" onkeypress="handleKey(event)" />
+  <button onclick="send()">전송</button>
+</div>
+
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
